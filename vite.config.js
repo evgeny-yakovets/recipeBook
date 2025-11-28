@@ -18,12 +18,13 @@ export default defineConfig({
         }),
     ],
     server: {
-        host: '0.0.0.0',      
+        host: true,           
         port: 5173,
         strictPort: true,
         hmr: {
-            host: 'localhost', 
-            protocol: 'ws',    
+            host: 'localhost',   
+            port: 5173,
+            protocol: 'ws',
         },
     },
 });
