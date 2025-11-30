@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Recipe extends Model
 {
+    use HasFactory;
+
+    const DEFAULT_IMG_URL = '/images/default-recipe.png';
     /**
      * The attributes that are mass assignable.
      *
@@ -37,9 +41,21 @@ class Recipe extends Model
             'cuisine_type' => $this->cuisine_type,
             'ingredients' => json_decode($this->ingredients, true),
             'steps' => json_decode($this->steps, true),
-            'image' => $this->image,
+            'image' => $this->getImageUrl(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
     }
+
+    public function getImageUrl()
+    {
+        
+        if(!$this->image){
+            return self::DEFAULT_IMG_URL;
+        }
+
+        return "/storage/{$this->image}";
+    }
+
+    
 }

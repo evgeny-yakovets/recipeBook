@@ -43,6 +43,7 @@ const submit = () => {
 
                 <TextInput
                     id="email"
+                    data-testid="email"
                     type="email"
                     class="mt-1 block w-full"
                     v-model="form.email"
@@ -59,6 +60,7 @@ const submit = () => {
 
                 <TextInput
                     id="password"
+                    data-testid="password"
                     type="password"
                     class="mt-1 block w-full"
                     v-model="form.password"
@@ -88,6 +90,8 @@ const submit = () => {
                 </Link>
 
                 <PrimaryButton
+                    id="loginButton"
+                    data-testid="loginButton"
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"

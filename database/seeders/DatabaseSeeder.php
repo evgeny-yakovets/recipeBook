@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\RecipeSeeder;
+use Database\Seeders\AdminUserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,7 +26,12 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Test User',
                 'password' => Hash::make('password'),
                 'role' => User::ROLE_USER,
+                'email_verified_at' => now(),
             ]
         );
+
+        User::factory()->count(10)->create();
+
+        $this->call(RecipeSeeder::class);
     }
 }

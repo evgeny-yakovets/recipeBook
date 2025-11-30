@@ -13,14 +13,14 @@ const props = defineProps({
 });
 </script>
 <template>
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center h-[42px]">
         <div class="flex justify-between items-center gap-4">
-            <Link href="/recipes/create" class="btn-primary">Add new</Link>
+            <Link v-if="$page.props.auth.user" href="/recipes/create" class="btn-primary">Add new</Link>
+            <Link v-if="(!props.recipe && props.isEditMode) || props.recipe" href="/" class="text-gray-600">Back</Link>
             <template v-if="props.recipe">
-                <Link href="/recipes" class="text-gray-600">Back</Link>
                 <div class="flex alig-center min-w-[36px]">
-                    <Link v-if="props.isEditMode" :href="`/recipes/${props.recipe.id}`" class="text-blue-600 hover:underline">View</Link>
-                    <Link v-else :href="`/recipes/${recipe.id}/edit`" class="text-blue-600 hover:underline">Edit</Link>
+                    <Link v-if="props.isEditMode" :href="`/recipes/${props.recipe.id}`" class="text-gray-600">View</Link>
+                    <Link v-else :href="`/recipes/${recipe.id}/edit`" class="text-gray-600">Edit</Link>
                 </div>
                 <Link
                     :href="`/recipes/${recipe.id}`"

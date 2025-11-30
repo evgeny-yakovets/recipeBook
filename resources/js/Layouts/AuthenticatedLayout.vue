@@ -6,7 +6,9 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3'
 
+const { auth } = usePage().props
 const showingNavigationDropdown = ref(false);
 </script>
 
@@ -37,15 +39,30 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('recipes.index')"
                                     :active="route().current('recipes.index')"
                                 >
-                                    My Recipes
+                                    Recipes
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div class="hidden sm:ms-6 sm:flex sm:items-center">
+                        <nav v-if="!auth.user" class="-mx-3 flex flex-1 justify-end items-center">
+                            <Link
+                                :href="route('login')"
+                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                            >
+                                Log in
+                            </Link>
+
+                            <Link
+                                :href="route('register')"
+                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                            >
+                                Register
+                            </Link>
+                        </nav>
+                        <div v-else class="hidden sm:ms-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
                             <div class="relative ms-3">
-                                <Dropdown align="right" width="48">
+                                <Dropdown align="right" width="100">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button
@@ -140,9 +157,22 @@ const showingNavigationDropdown = ref(false);
                     class="sm:hidden"
                 >
                     <!-- Responsive Settings Options -->
-                    <div
-                        class="border-t border-gray-200 pb-1 pt-4"
-                    >
+                     <nav v-if="!auth.user" class="-mx-3 flex flex-1 justify-end items-center">
+                            <Link
+                                :href="route('login')"
+                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                            >
+                                Log in
+                            </Link>
+
+                            <Link
+                                :href="route('register')"
+                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                            >
+                                Register
+                            </Link>
+                        </nav>
+                    <div v-else class="border-t border-gray-200 pb-1 pt-4" >
                         <div class="px-4">
                             <div
                                 class="text-base font-medium text-gray-800"

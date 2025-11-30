@@ -8,13 +8,24 @@ const props = defineProps({
     },
     width: {
         type: String,
-        default: '48',
+        default: '100',
     },
     contentClasses: {
         type: String,
         default: 'py-1 bg-white',
     },
+    searchable: {
+        type: Boolean,
+        default: false, 
+    },
+    searchPlaceholder: {
+        type: String,
+        default: 'Search...',
+    },
 });
+
+const open = ref(false);
+const search = ref('');
 
 const closeOnEscape = (e) => {
     if (open.value && e.key === 'Escape') {
@@ -24,12 +35,6 @@ const closeOnEscape = (e) => {
 
 onMounted(() => document.addEventListener('keydown', closeOnEscape));
 onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
-
-const widthClass = computed(() => {
-    return {
-        48: 'w-48',
-    }[props.width.toString()];
-});
 
 const alignmentClasses = computed(() => {
     if (props.align === 'left') {
@@ -41,7 +46,6 @@ const alignmentClasses = computed(() => {
     }
 });
 
-const open = ref(false);
 </script>
 
 <template>
@@ -68,15 +72,24 @@ const open = ref(false);
             <div
                 v-show="open"
                 class="absolute z-50 mt-2 rounded-md shadow-lg"
-                :class="[widthClass, alignmentClasses]"
-                style="display: none"
+                :class="[alignmentClasses]"
+                :style="{ width: Number(props.width) + 'px' }"
                 @click="open = false"
             >
                 <div
                     class="rounded-md ring-1 ring-black ring-opacity-5"
                     :class="contentClasses"
                 >
-                    <slot name="content" />
+                    <div v-if="searchable" class="px-3 py-2">
+                        <input
+                        v-model="search"
+                        type="text"
+                        :placeholder="searchPlaceholder"
+                        class="input w-full"
+                        @click.stop
+                        />
+                    </div>
+                    <slot name="content" :search="search" />
                 </div>
             </div>
         </Transition>
