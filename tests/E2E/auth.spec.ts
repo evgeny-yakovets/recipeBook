@@ -4,10 +4,8 @@ import { testUser } from '../Fixtures/user';
 test.describe('User Authentication', () => {
 
   test('user can register', async ({ page }) => {
-    await page.goto('/register', { waitUntil: 'networkidle', timeout: 60000 });
+    await page.goto('/register', { waitUntil: 'networkidle'});
 
-
-    await page.waitForSelector('#email'); 
     await page.fill('#email', testUser.email);
 
     await page.fill('#name', testUser.name);
@@ -21,9 +19,8 @@ test.describe('User Authentication', () => {
   });
 
   test('user can login', async ({ page }) => {
-    await page.goto('/login', { waitUntil: 'networkidle', timeout: 60000 });
+    await page.goto('/login', { waitUntil: 'networkidle' });
 
-    await page.waitForSelector('#email'); 
     await page.fill('#email', testUser.email);
     await page.fill('#password', testUser.password);
     await page.click('#loginButton');

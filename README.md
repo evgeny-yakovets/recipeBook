@@ -5,10 +5,10 @@ Create containers:
 docker compose up -d --build
 
 Setup project:
-docker compose exec app composer setup
+docker compose exec php composer setup
 
 Run tests:
-docker compose exec app composer test
+docker compose exec php composer test
 
 Emails for registered users stored in:
 storage/logs/laravel.log
