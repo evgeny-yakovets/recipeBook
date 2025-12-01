@@ -7,9 +7,6 @@ docker compose up -d --build
 Setup project:
 docker compose exec app composer setup
 
-Run Vite dev-server:
-docker compose exec app npm run dev -- --host
-
 Run tests:
 docker compose exec app composer test
 
@@ -22,3 +19,4 @@ docker compose exec app php artisan l5-swagger:generate
 Go to:
 http://localhost:8080/
 
+Project splited to separate docker containers - nothing needed to up manually except setup
