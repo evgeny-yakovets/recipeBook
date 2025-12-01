@@ -23,7 +23,7 @@ class RecipeController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('Recipes/Index', [
-            'recipes' => $this->getRecipesByRequest($request),
+            'recipes' => app('App\Http\Controllers\Api\RecipeController')->index($request)->getData(true),
             'cuisines' => Recipe::whereNotNull('cuisine_type')
                 ->where('cuisine_type', '<>', '')
                 ->distinct()
@@ -33,39 +33,7 @@ class RecipeController extends Controller
 
     public function recipesSearch(Request $request)
     {
-        return response()->json($this->getRecipesByRequest($request));
-    }
-
-    private function getRecipesByRequest(Request $request)
-    {
-        $query = Recipe::with('user')->orderBy('created_at', 'desc');
-
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
-
-        if ($request->filled('cuisine_type')) {
-            $query->where('cuisine_type', $request->cuisine_type);
-        }
-
-
-        $page = $request->input('page', 1);
-        $offset = ($page - 1) * self::DEFAULT_PAGINATION_LIMIT;
-
-        $total = $query->count();
-        $recipes = $query
-            ->skip($offset)
-            ->take(self::DEFAULT_PAGINATION_LIMIT)
-            ->get();
-
-        $nextPage = ($offset + $recipes->count() < $total) ? $page + 1 : null;
-
-        return [
-            'data' => $recipes->map->serializeRecipe(),
-            'next_page' => $nextPage,
-            'current_page' => $page,
-            'total' => $total,
-        ];
+        return app('App\Http\Controllers\Api\RecipeController')->search($request);
     }
 
     public function create(Request $request)
@@ -76,7 +44,7 @@ class RecipeController extends Controller
     }
 
     public function show(Recipe $recipe)
-    {        
+    {
         $this->authorize('show', $recipe);
 
         return Inertia::render('Recipes/View', [
@@ -85,7 +53,7 @@ class RecipeController extends Controller
     }
 
     public function edit(Recipe $recipe)
-    {        
+    {
         $this->authorize('edit', $recipe);
 
         return Inertia::render('Recipes/Create', [
@@ -105,8 +73,6 @@ class RecipeController extends Controller
     public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
         $this->authorize('edit', $recipe);
-
-        
 
         $recipe->update($this->getRecipeDataFromRequest($request));
 
@@ -144,6 +110,6 @@ class RecipeController extends Controller
 
         $recipe->delete();
 
-        return Inertia::location(route('recipes.index'));
+        return Redirect::route('recipes.index');
     }
 }

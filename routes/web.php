@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', [RecipeController::class, 'index'])->name('recipes.index');
-Route::get('/recipes/search', [RecipeController::class, 'recipesSearch'])->middleware(['auth', 'verified'])->name('recipes.search');
+Route::get('/recipes/search', [RecipeController::class, 'recipesSearch'])->name('recipes.search');
 
 Route::get('/recipes/create', [RecipeController::class, 'create'])->middleware(['auth', 'verified'])->name('recipes.create');
 Route::get('/recipes/{recipe}', [RecipeController::class, 'show'])->middleware(['auth', 'verified'])->name('recipes.show');

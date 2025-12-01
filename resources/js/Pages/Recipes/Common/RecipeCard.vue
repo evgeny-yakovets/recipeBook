@@ -1,4 +1,5 @@
 <script setup>
+import { UserRole } from '@/Helpers/Enums/UserRole';
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -34,7 +35,7 @@ const props = defineProps({
                 {{ recipe.description }}
             </p>
 
-            <div v-if="props.currentUser?.id === recipe.user_id" class="mt-2 flex gap-4">
+            <div v-if="props.currentUser && (props.currentUser.id === recipe.user_id || props.currentUser.role === UserRole.admin)" class="mt-2 flex gap-4">
                 <Link :href="`/recipes/${recipe.id}`" class="text-gray-600">View</Link>
                 <Link :href="`/recipes/${recipe.id}/edit`" class="text-gray-600">Edit</Link>
                 <Link
