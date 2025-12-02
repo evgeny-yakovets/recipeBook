@@ -1,0 +1,60 @@
+stages:
+  - setup
+  - build
+  - test
+
+variables:
+  APP_ENV: testing
+  DB_CONNECTION: mysql
+  DB_HOST: mysql
+  DB_PORT: 3306
+  DB_DATABASE: recipebook
+  DB_USERNAME: recipe
+  DB_PASSWORD: secret
+  COMPOSER_CACHE_DIR: "$CI_PROJECT_DIR/.composer/cache"
+  NODE_ENV: production
+
+services:
+  - name: mysql:8.0
+    alias: mysql
+
+
+setup:
+  stage: setup
+  image: docker:20.10.24
+  services:
+    - docker:dind
+  script:
+    - docker-compose -f docker-compose.yml build
+  artifacts:
+    paths:
+      - vendor/
+      - node_modules/
+
+
+build:
+  stage: build
+  image: node:20
+  services:
+    - name: mysql:8.0
+      alias: mysql
+  before_script:
+    - npm ci
+  script:
+    - npm run build
+    - docker run --rm -v "$CI_PROJECT_DIR":/var/www/html -w /var/www/html php:8.2-cli composer install --no-interaction --prefer-dist
+  artifacts:
+    paths:
+      - public/build
+      - vendor/
+
+
+test:
+  stage: test
+  image: docker/compose:latest
+  services:
+    - name: mysql:8.0
+      alias: mysql
+  script:
+    - chmod +x run-tests.sh
+    - ./run-tests.sh
