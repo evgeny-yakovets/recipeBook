@@ -29,7 +29,6 @@ const submit = () => {
                 <InputLabel for="name" value="Name" />
 
                 <TextInput
-                    id="name"
                     data-testid="name"
                     type="text"
                     class="mt-1 block w-full"
@@ -46,7 +45,6 @@ const submit = () => {
                 <InputLabel for="email" value="Email" />
 
                 <TextInput
-                    id="email"
                     data-testid="email"
                     type="email"
                     class="mt-1 block w-full"
@@ -62,7 +60,6 @@ const submit = () => {
                 <InputLabel for="password" value="Password" />
 
                 <TextInput
-                    id="password"
                     data-testid="password"
                     type="password"
                     class="mt-1 block w-full"
@@ -81,7 +78,6 @@ const submit = () => {
                 />
 
                 <TextInput
-                    id="password_confirmation"
                     data-testid="password_confirmation"
                     type="password"
                     class="mt-1 block w-full"
@@ -105,7 +101,8 @@ const submit = () => {
                 </Link>
 
                 <PrimaryButton
-                    id="register"
+                    type="submit"
+                    data-testid="register"
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"

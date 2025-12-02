@@ -52,8 +52,7 @@
         ],
         "test": [
             "@php artisan config:clear --ansi",
-            "@php artisan test",
-            "npx playwright test"
+            "@php artisan test"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

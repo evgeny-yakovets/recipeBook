@@ -6,10 +6,16 @@ const props = defineProps({
   recipe: Object,
   currentUser: Object,
 });
+
+const reloadPage = () => {
+    window.location.reload()
+}
 </script>
 
 <template>
 <Link
+        :data-testid="`recipeCard_${ recipe.name }`"
+        :data-recipeid="recipe.id"
         :href="props.currentUser ? `/recipes/${recipe.id}` : '#'"
         class="cursor-default flex gap-[8px] block bg-white rounded-xl shadow overflow-hidden"
         :class="{
@@ -25,7 +31,7 @@ const props = defineProps({
         </div>
 
         <div class="p-4 space-y-2">
-            <h2 class="font-bold text-lg">{{ recipe.name }}</h2>
+            <h2 data-testid="recipeName" class="font-bold text-lg">{{ recipe.name }}</h2>
 
             <p class="text-sm text-gray-500">
                 Created by: {{ recipe.user_name }}
@@ -36,11 +42,13 @@ const props = defineProps({
             </p>
 
             <div v-if="props.currentUser && (props.currentUser.id === recipe.user_id || props.currentUser.role === UserRole.admin)" class="mt-2 flex gap-4">
-                <Link :href="`/recipes/${recipe.id}`" class="text-gray-600">View</Link>
-                <Link :href="`/recipes/${recipe.id}/edit`" class="text-gray-600">Edit</Link>
+                <Link data-testid="viewLink" :href="`/recipes/${recipe.id}`" class="text-gray-600">View</Link>
+                <Link data-testid="editLink" :href="`/recipes/${recipe.id}/edit`" class="text-gray-600">Edit</Link>
                 <Link
+                    data-testid="deleteLink" 
                     :href="`/recipes/${recipe.id}`"
                     method="delete"
+                    @success="reloadPage"
                     class="text-red-600 hover:underline"
                 >
                     Delete

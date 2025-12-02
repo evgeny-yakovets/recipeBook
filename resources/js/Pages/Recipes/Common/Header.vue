@@ -15,14 +15,39 @@ const props = defineProps({
 <template>
     <div class="flex justify-between items-center h-[42px]">
         <div class="flex justify-between items-center gap-4">
-            <Link v-if="$page.props.auth.user" href="/recipes/create" class="btn-primary">Add new</Link>
-            <Link v-if="(!props.recipe && props.isEditMode) || props.recipe" href="/" class="text-gray-600">Back</Link>
+            <Link 
+                v-if="$page.props.auth.user" 
+                data-testid="addNewLink"
+                href="/recipes/create" 
+                class="btn-primary">
+                Add new
+            </Link>
+            <Link 
+                v-if="(!props.recipe && props.isEditMode) || props.recipe"
+                data-testid="backLink" 
+                href="/" 
+                class="text-gray-600">
+                Back
+            </Link>
             <template v-if="props.recipe">
                 <div class="flex alig-center min-w-[36px]">
-                    <Link v-if="props.isEditMode" :href="`/recipes/${props.recipe.id}`" class="text-gray-600">View</Link>
-                    <Link v-else :href="`/recipes/${recipe.id}/edit`" class="text-gray-600">Edit</Link>
+                    <Link 
+                        v-if="props.isEditMode" 
+                        data-testid="viewLink" 
+                        :href="`/recipes/${props.recipe.id}`" 
+                        class="text-gray-600">
+                        View
+                    </Link>
+                    <Link 
+                        v-else 
+                        data-testid="editLink" 
+                        :href="`/recipes/${recipe.id}/edit`" 
+                        class="text-gray-600">
+                        Edit
+                    </Link>
                 </div>
                 <Link
+                    data-testid="deleteLink" 
                     :href="`/recipes/${recipe.id}`"
                     method="delete"
                     class="text-red-600 hover:underline"

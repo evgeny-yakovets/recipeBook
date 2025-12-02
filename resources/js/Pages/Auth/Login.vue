@@ -42,7 +42,6 @@ const submit = () => {
                 <InputLabel for="email" value="Email" />
 
                 <TextInput
-                    id="email"
                     data-testid="email"
                     type="email"
                     class="mt-1 block w-full"
@@ -59,7 +58,6 @@ const submit = () => {
                 <InputLabel for="password" value="Password" />
 
                 <TextInput
-                    id="password"
                     data-testid="password"
                     type="password"
                     class="mt-1 block w-full"
@@ -90,7 +88,7 @@ const submit = () => {
                 </Link>
 
                 <PrimaryButton
-                    id="loginButton"
+                    type="submit"
                     data-testid="loginButton"
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"

@@ -133,6 +133,7 @@ const validateFrontend = () => {
       <div class="space-y-1">
         <label class="font-medium text-gray-700">Name</label>
         <input 
+          data-testid="recipeNameInput"
           v-model="form.name" 
           class="input w-full" 
           placeholder="Recipe name"
@@ -145,6 +146,7 @@ const validateFrontend = () => {
       <div class="space-y-1">
         <label class="font-medium text-gray-700">Cuisine type</label>
         <input 
+          data-testid="cuisineTypeInput"
           v-model="form.cuisine_type" 
           class="input w-full" 
           placeholder="Cuisine type"
@@ -157,6 +159,7 @@ const validateFrontend = () => {
       <div class="space-y-1">
         <label class="font-medium text-gray-700">Description</label>
         <textarea 
+          data-testid="descriptionInput"
           v-model="form.description" 
           class="input w-full h-20"
           placeholder="Short description"
@@ -169,6 +172,7 @@ const validateFrontend = () => {
       <div class="space-y-1">
         <label class="font-medium text-gray-700">Ingredients</label>
         <textarea 
+          data-testid="ingredientsInput"
           v-model="form.ingredients" 
           class="input w-full h-32"
           placeholder="One ingredient per line"
@@ -181,6 +185,7 @@ const validateFrontend = () => {
       <div class="space-y-1">
         <label class="font-medium text-gray-700">Steps</label>
         <textarea 
+          data-testid="stepsInput"
           v-model="form.steps" 
           class="input w-full h-32"
           placeholder="One step per line"
@@ -194,6 +199,7 @@ const validateFrontend = () => {
       <div class="flex items-center pt-4">
 
         <button 
+          data-testid="saveButton"
           @click="submit" 
           class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 shadow"
         >
