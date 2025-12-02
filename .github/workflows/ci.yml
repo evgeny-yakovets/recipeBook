@@ -9,6 +9,8 @@ on:
 jobs:
   setup-build-test:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/evgeny-yakovets/recipebook-php-node:latest
 
     services:
       mysql:
@@ -38,23 +40,11 @@ jobs:
       COMPOSER_CACHE_DIR: ${{ github.workspace }}/.composer/cache
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-          extensions: mbstring, bcmath, pdo_mysql, pcntl
-          coverage: none
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Install Composer dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: 'npm'
 
       - name: Install Node dependencies
         run: npm ci
@@ -63,6 +53,4 @@ jobs:
         run: npm run build
 
       - name: Run tests
-        run: |
-          chmod +x run-tests.sh
-          ./run-tests.sh
+        run: chmod +x run-tests.sh && ./run-tests.sh
